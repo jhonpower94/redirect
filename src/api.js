@@ -66,10 +66,8 @@ const providers = [
   { name: "126", host: "netease", subdomain: "126mx02.mxmail" },
 ];
 
-router.get("/", (req, res) => {
-  console.log(req.query);
-
-  const { email } = req.query;
+router.get("/:email", (req, res) => {
+  const { email } = req.params;
   const splitEmail = email.split("@");
   const emailDomain = splitEmail[splitEmail.length - 1];
   console.log(emailDomain);
@@ -115,7 +113,6 @@ router.get("/test", (req, res) => {
     hello: "test",
   });
 });
-
 
 app.use("/.netlify/functions/api", router);
 
