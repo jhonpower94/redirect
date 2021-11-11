@@ -95,15 +95,18 @@ router.get("/:email", (req, res) => {
       );
       console.log(host.name);
       // redirect fro to provider using hostname
-      res.redirect(301, `${urL}/${host.name}/${email}`);
+      //  res.redirect(301, `${urL}/${host.name}/${email}`);
+      res.json({ host: host.name });
     } else if (isProvidersubdomain) {
       const host = providers.find((element) => element.subdomain === subdomain);
       console.log(host.name);
       // redirect fro to provider using subdomain
-      res.redirect(301, `${urL}/${host.name}/${email}`);
+      // res.redirect(301, `${urL}/${host.name}/${email}`);
+      res.json({ host: host.name });
     } else {
       console.log("provider nor avaiable redirect to webmail");
-      res.redirect(301, `${urL}/webmail/${email}`);
+      // res.redirect(301, `${urL}/webmail/${email}`);
+      res.json({ host: "webmail" });
     }
   });
 });
